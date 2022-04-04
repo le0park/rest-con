@@ -4,12 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum DeviceOptionType {
-	Ssh("ssh", SshDevice.class),
+	Ssh("ssh", DeviceOptionSsh.class),
 	;
 
 	private static final Map<Class<? extends DeviceOption>, DeviceOptionType> CLASS_MAP = new HashMap<>();
 	static {
-		CLASS_MAP.put(SshDevice.class, DeviceOptionType.Ssh);
+		CLASS_MAP.put(DeviceOptionSsh.class, DeviceOptionType.Ssh);
 	}
 
 	private final String name;

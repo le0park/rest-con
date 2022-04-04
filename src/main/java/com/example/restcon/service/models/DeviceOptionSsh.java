@@ -1,25 +1,22 @@
 package com.example.restcon.service.models;
 
-import org.springframework.data.annotation.TypeAlias;
-import org.springframework.data.mongodb.core.mapping.Document;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SshDevice extends DeviceOption {
+public class DeviceOptionSsh extends DeviceOption {
+	public static final String TYPE = "ssh";
+
 	private String username;
 	private String host;
 	private String port;
-	private String publicKey;
+	private SshKeyPair keyPair;
 
-	public SshDevice(String name, String username, String host, String port, String publicKey) {
+	public DeviceOptionSsh(String username, String host, String port, SshKeyPair keyPair) {
 		this.username = username;
 		this.host = host;
 		this.port = port;
-		this.publicKey = publicKey;
+		this.keyPair = keyPair;
 	}
-
-	public SshDevice() {}
 
 	public String getUsername() {
 		return username;
@@ -31,10 +28,6 @@ public class SshDevice extends DeviceOption {
 
 	public String getPort() {
 		return port;
-	}
-
-	public String getPublicKey() {
-		return publicKey;
 	}
 
 	public void setUsername(String username) {
@@ -49,7 +42,21 @@ public class SshDevice extends DeviceOption {
 		this.port = port;
 	}
 
-	public void setPublicKey(String publicKey) {
-		this.publicKey = publicKey;
+	public SshKeyPair getKeyPair() {
+		return keyPair;
+	}
+
+	public void setKeyPair(SshKeyPair keyPair) {
+		this.keyPair = keyPair;
+	}
+
+	@Override
+	public String toString() {
+		return "DeviceOptionSsh{" +
+			"username='" + username + '\'' +
+			", host='" + host + '\'' +
+			", port='" + port + '\'' +
+			", keyPair=" + keyPair +
+			'}';
 	}
 }
