@@ -19,9 +19,6 @@ public class CommandRepository {
 	}
 
 	public Mono<Command> save(Command command) {
-		System.out.println(command.toString());
-		System.out.println(command.getAction().toString());
-		System.out.println(command.getDeviceId());
 		return template.save(command);
 	}
 
