@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 
-import com.example.restcon.service.executors.CommandExecutor;
+import com.example.restcon.service.executors.Executor;
 import com.example.restcon.service.models.Command;
 import com.example.restcon.service.models.CommandResult;
 import com.example.restcon.service.repositories.CommandRepository;
@@ -16,11 +16,11 @@ import reactor.core.publisher.Mono;
 @Component
 public class CommandService {
 	private final CommandRepository commandRepository;
-	private final List<CommandExecutor> executors;
+	private final List<Executor> executors;
 
 	public CommandService(
 		CommandRepository commandRepository,
-		List<CommandExecutor> executors
+		List<Executor> executors
 	) {
 		this.commandRepository = commandRepository;
 		this.executors = executors;
@@ -34,9 +34,9 @@ public class CommandService {
 
 	private Mono<CommandResult> execute(Command command) {
 		return Flux.fromIterable(executors)
-			.filter(executor -> executor.accept(command))
+			.flatMap(executor -> executor.execute(command.getAction()))
 			.single()
-			.flatMap(executor -> executor.execute(command.getAction()));
+			.switchIfEmpty(Mono.error(new IllegalArgumentException("Type is not allowed. ")));
 	}
 
 	public Mono<Command> createOrUpdate(ServerRequest request) {
