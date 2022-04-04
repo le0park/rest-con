@@ -1,18 +1,15 @@
 package com.example.restcon.service.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Device {
-	@Id @GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@Document(collection = "devices")
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class Device {
+	private String id;
 	private String name;
+	private DeviceOption option;
 
 	public Device() { }
 
@@ -28,7 +25,11 @@ public abstract class Device {
 		this.name = name;
 	}
 
-	public long getId() {
-		return id;
+	public DeviceOption getOption() {
+		return option;
+	}
+
+	public void setOption(DeviceOption option) {
+		this.option = option;
 	}
 }

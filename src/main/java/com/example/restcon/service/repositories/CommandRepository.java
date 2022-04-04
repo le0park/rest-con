@@ -1,19 +1,42 @@
 package com.example.restcon.service.repositories;
 
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.data.repository.Repository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.stereotype.Repository;
 
 import com.example.restcon.service.models.Command;
 
-public interface CommandRepository extends Repository<Command, Long> {
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
-	<T extends Command> List<T> findAllBy();
+@Repository
+public class CommandRepository {
+	private final ReactiveMongoTemplate template;
 
-	<T extends Command> Optional<T> findCommandById(long id);
+	public CommandRepository(ReactiveMongoTemplate template) {
+		this.template = template;
+	}
 
-	void deleteById(long id);
+	public Mono<Command> save(Command command) {
+		return template.save(command);
+	}
 
-	<T extends Command> T save(T command);
+	public Flux<Command> findAll() {
+		return template.findAll(Command.class);
+	}
+
+	public Mono<Command> findById(String id) {
+		return template.findById(id, Command.class);
+	}
+
+	public Mono<Void> deleteById(String id) {
+		return template.remove(Query.query(Criteria.where("id").is(id)), Command.class)
+			.flatMap(result -> result.getDeletedCount() > 0
+				? Mono.empty()
+				: Mono.error(new IllegalArgumentException("Command not found. ")));
+	}
 }

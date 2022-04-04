@@ -1,40 +1,43 @@
 package com.example.restcon.service.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.OneToOne;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Command {
-	@Id @GeneratedValue(strategy = GenerationType.AUTO)
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@Document(collection = "commands")
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class Command {
 	private String id;
-	private CommandType type;
-
-	@OneToOne(targetEntity = Device.class)
 	private Device device;
+	private CommandAction action;
 
-	public Command(String id, CommandType type, Device device) {
+	public Command(String id, Device device, CommandAction action) {
 		this.id = id;
-		this.type = type;
 		this.device = device;
+		this.action = action;
 	}
-
-	public Command() { }
 
 	public String getId() {
 		return id;
 	}
 
-	public CommandType getType() {
-		return type;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public Device getDevice() {
 		return device;
+	}
+
+	public void setDevice(Device device) {
+		this.device = device;
+	}
+
+	public CommandAction getAction() {
+		return action;
+	}
+
+	public void setAction(CommandAction action) {
+		this.action = action;
 	}
 }

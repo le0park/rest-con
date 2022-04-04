@@ -1,31 +1,37 @@
 package com.example.restcon.service.models;
 
-import javax.persistence.Entity;
-
-@Entity
-public class WebhookCommand extends Command {
+public class WebhookAction extends CommandAction {
 	private String url;
 	private String body;
 	private String method;
 
-	public WebhookCommand(String id, String url, String body, String method, Device device) {
-		super(id, CommandType.Webhook, device);
+	public WebhookAction(String url, String body, String method) {
 		this.url = url;
 		this.body = body;
 		this.method = method;
 	}
 
-	public WebhookCommand() { }
-
 	public String getUrl() {
 		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 	public String getBody() {
 		return body;
 	}
 
+	public void setBody(String body) {
+		this.body = body;
+	}
+
 	public String getMethod() {
 		return method;
+	}
+
+	public void setMethod(String method) {
+		this.method = method;
 	}
 }

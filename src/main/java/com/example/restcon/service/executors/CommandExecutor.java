@@ -1,13 +1,12 @@
 package com.example.restcon.service.executors;
 
-import java.util.Optional;
-
-import com.example.restcon.service.models.Command;
+import com.example.restcon.service.models.CommandAction;
 import com.example.restcon.service.models.CommandResult;
-import com.example.restcon.service.models.CommandType;
+
+import reactor.core.publisher.Mono;
 
 public interface CommandExecutor {
-	boolean accept(CommandType type);
+	boolean accept(CommandAction type);
 
-	Optional<CommandResult> execute (Command command);
+	Mono<CommandResult> execute (CommandAction command);
 }
