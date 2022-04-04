@@ -17,10 +17,10 @@ import reactor.core.publisher.Mono;
 import reactor.netty.http.client.HttpClient;
 
 @Component
-public class WebhookClient {
+public class WebhookInvoker {
 	private final WebClient client;
 
-	public WebhookClient() {
+	public WebhookInvoker() {
 		HttpClient httpClient = HttpClient.create()
 			.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5000)
 			.responseTimeout(Duration.ofMillis(5000))

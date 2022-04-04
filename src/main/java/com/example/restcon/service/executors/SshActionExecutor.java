@@ -21,7 +21,7 @@ public class SshActionExecutor extends ActionExecutor {
 
 	@Override
 	protected boolean accept(CommandAction action) {
-		return action.getType() == CommandType.Ssh;
+		return CommandType.Ssh.getClazz().isInstance(action);
 	}
 
 	@Override

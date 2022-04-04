@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.example.restcon.service.executors.clients.WebhookClient;
+import com.example.restcon.service.executors.clients.WebhookInvoker;
 import com.example.restcon.service.models.CommandAction;
 import com.example.restcon.service.models.CommandResult;
 import com.example.restcon.service.models.CommandType;
@@ -19,15 +19,15 @@ import reactor.core.publisher.Mono;
 public class WebhookActionExecutor extends ActionExecutor {
 	private static final Logger logger = LoggerFactory.getLogger(WebhookActionExecutor.class);
 
-	private final WebhookClient client;
+	private final WebhookInvoker client;
 
-	public WebhookActionExecutor(WebhookClient client) {
+	public WebhookActionExecutor(WebhookInvoker client) {
 		this.client = client;
 	}
 
 	@Override
 	protected boolean accept(CommandAction action) {
-		return action.getType() == CommandType.Webhook;
+		return CommandType.Webhook.getClazz().isInstance(action);
 	}
 
 	@Override
