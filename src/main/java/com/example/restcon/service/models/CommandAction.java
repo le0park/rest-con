@@ -15,6 +15,13 @@ public abstract class CommandAction {
 	// type 필드로 하위 객체를 구분한다.
 	public static final String DISCRIMINATOR = "type";
 
-	public CommandAction() {
+	private final CommandType type;
+
+	public CommandAction(CommandType type) {
+		this.type = type;
+	}
+
+	public CommandType getType() {
+		return type;
 	}
 }

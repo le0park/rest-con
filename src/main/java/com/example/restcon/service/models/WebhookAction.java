@@ -8,6 +8,7 @@ public class WebhookAction extends CommandAction {
 	private String method;
 
 	public WebhookAction(String url, String body, String method) {
+		super(CommandType.Webhook);
 		this.url = url;
 		this.body = body;
 		this.method = method;
