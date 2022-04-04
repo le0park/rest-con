@@ -1,15 +1,10 @@
 package com.example.restcon.service;
 
-import java.util.List;
-
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.reactive.function.server.ServerRequest;
 
-import com.example.restcon.service.executors.CommandExecutor;
 import com.example.restcon.service.models.Device;
-import com.example.restcon.service.models.CommandResult;
-import com.example.restcon.service.models.CommandType;
-import com.example.restcon.service.repositories.CommandRepository;
 import com.example.restcon.service.repositories.DeviceRepository;
 
 import reactor.core.publisher.Flux;
@@ -25,7 +20,13 @@ public class DeviceService {
 
 	public Mono<Device> createOrUpdate(ServerRequest request) {
 		return request.bodyToMono(Device.class)
-			.log()
+			.flatMap(device -> {
+				if (!StringUtils.hasText(device.getName())) {
+					return Mono.error(new IllegalArgumentException("Name must not be empty. "));
+				}
+
+				return Mono.just(device);
+			})
 			.flatMap(repository::save);
 	}
 
@@ -44,6 +45,8 @@ public class DeviceService {
 
 		return request.bodyToMono(Device.class)
 			.flatMap(command -> repository.deleteById(commandId))
-			.then();
+			.flatMap(count -> count == 0
+				? Mono.error(new IllegalArgumentException("Device not found. "))
+				: Mono.empty());
 	}
 }

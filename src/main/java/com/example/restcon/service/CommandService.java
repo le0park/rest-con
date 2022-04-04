@@ -8,7 +8,6 @@ import org.springframework.web.reactive.function.server.ServerRequest;
 import com.example.restcon.service.executors.CommandExecutor;
 import com.example.restcon.service.models.Command;
 import com.example.restcon.service.models.CommandResult;
-import com.example.restcon.service.models.CommandType;
 import com.example.restcon.service.repositories.CommandRepository;
 
 import reactor.core.publisher.Flux;
@@ -54,6 +53,9 @@ public class CommandService {
 
 		return request.bodyToMono(Command.class)
 			.flatMap(command -> commandRepository.deleteById(commandId))
+			.flatMap(count -> count == 0
+				? Mono.error(new IllegalArgumentException("Command not found. "))
+				: Mono.empty())
 			.then();
 	}
 }

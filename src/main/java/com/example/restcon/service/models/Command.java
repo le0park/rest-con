@@ -1,11 +1,15 @@
 package com.example.restcon.service.models;
 
+import org.springframework.core.style.ToStringCreator;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.aggregation.ConvertOperators;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Document(collection = "commands")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Command {
 	@Id

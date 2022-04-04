@@ -5,7 +5,6 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
-import com.example.restcon.service.models.Command;
 import com.example.restcon.service.models.Device;
 
 import reactor.core.publisher.Flux;
@@ -31,10 +30,8 @@ public class DeviceRepository {
 		return template.findById(id, Device.class);
 	}
 
-	public Mono<Void> deleteById(String id) {
+	public Mono<Long> deleteById(String id) {
 		return template.remove(Query.query(Criteria.where("id").is(id)), Device.class)
-			.flatMap(result -> result.getDeletedCount() > 0
-				? Mono.empty()
-				: Mono.error(new IllegalArgumentException("Device not found. ")));
+			.flatMap(result -> Mono.just(result.getDeletedCount()));
 	}
 }

@@ -30,10 +30,8 @@ public class CommandRepository {
 		return template.findById(id, Command.class);
 	}
 
-	public Mono<Void> deleteById(String id) {
+	public Mono<Long> deleteById(String id) {
 		return template.remove(Query.query(Criteria.where("id").is(id)), Command.class)
-			.flatMap(result -> result.getDeletedCount() > 0
-				? Mono.empty()
-				: Mono.error(new IllegalArgumentException("Command not found. ")));
+			.flatMap(result -> Mono.just(result.getDeletedCount()));
 	}
 }

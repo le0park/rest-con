@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 import static org.springframework.web.reactive.function.server.RouterFunctions.*;
 
 import org.springframework.web.reactive.function.server.RouterFunction;
-import org.springframework.web.reactive.function.server.RouterFunctions;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
 import com.example.restcon.service.CommandService;
@@ -19,7 +18,7 @@ import com.example.restcon.service.models.Device;
 import com.example.restcon.web.support.ServerResponseUtils;
 
 @Configuration
-public class CommandRouter {
+public class WebRouter {
 	@Bean
 	public RouterFunction<ServerResponse> router(
 		CommandService commandService,
