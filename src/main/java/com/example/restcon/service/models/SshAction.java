@@ -1,6 +1,8 @@
 package com.example.restcon.service.models;
 
 public class SshAction extends CommandAction {
+	public static final String TYPE = "ssh";
+
 	public SshAction(String script) {
 		this.script = script;
 	}

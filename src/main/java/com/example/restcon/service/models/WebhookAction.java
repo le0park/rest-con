@@ -1,6 +1,8 @@
 package com.example.restcon.service.models;
 
 public class WebhookAction extends CommandAction {
+	public static final String TYPE = "webhook";
+
 	private String url;
 	private String body;
 	private String method;
@@ -33,5 +35,14 @@ public class WebhookAction extends CommandAction {
 
 	public void setMethod(String method) {
 		this.method = method;
+	}
+
+	@Override
+	public String toString() {
+		return "WebhookAction{" +
+			"url='" + url + '\'' +
+			", body='" + body + '\'' +
+			", method='" + method + '\'' +
+			'}';
 	}
 }
