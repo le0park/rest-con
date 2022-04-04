@@ -4,7 +4,6 @@ public class SshAction extends CommandAction {
 	public static final String TYPE = "ssh";
 
 	public SshAction(String script) {
-		super(CommandType.Ssh);
 		this.script = script;
 	}
 
