@@ -14,7 +14,7 @@ public enum CommandType {
 	private static final Map<Class<? extends CommandAction>, CommandType> CLASS_MAP = new HashMap<>();
 	static {
 		CLASS_MAP.put(SshAction.class, CommandType.Ssh);
-		CLASS_MAP.put(WebhookAction.class, CommandType.Ssh);
+		CLASS_MAP.put(WebhookAction.class, CommandType.Webhook);
 	}
 
 	private final String name;

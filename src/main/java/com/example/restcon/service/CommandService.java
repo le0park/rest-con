@@ -26,9 +26,15 @@ public class CommandService {
 		this.executors = executors;
 	}
 
-	public Mono<CommandResult> execute(Command command) {
+	public Mono<CommandResult> execute(ServerRequest request) {
+		return Mono.just(request.pathVariable("id"))
+			.flatMap(commandRepository::findById)
+			.flatMap(this::execute);
+	}
+
+	private Mono<CommandResult> execute(Command command) {
 		return Flux.fromIterable(executors)
-			.filter(executor -> executor.accept(command.getAction()))
+			.filter(executor -> executor.accept(command))
 			.single()
 			.flatMap(executor -> executor.execute(command.getAction()));
 	}

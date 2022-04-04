@@ -6,16 +6,22 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CommandResult {
-	private Command command;
+	private CommandAction action;
 	private String result;
 	private LocalDateTime executeTime;
 
-	public Command getCommand() {
-		return command;
+	public CommandResult(CommandAction action, String result, LocalDateTime executeTime) {
+		this.action = action;
+		this.result = result;
+		this.executeTime = executeTime;
 	}
 
-	public void setCommand(Command command) {
-		this.command = command;
+	public CommandAction getCommand() {
+		return action;
+	}
+
+	public void setCommand(CommandAction action) {
+		this.action = action;
 	}
 
 	public String getResult() {
