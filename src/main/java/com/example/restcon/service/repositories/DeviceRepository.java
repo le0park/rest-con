@@ -6,37 +6,35 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 import com.example.restcon.service.models.Command;
+import com.example.restcon.service.models.Device;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Repository
-public class CommandRepository {
+public class DeviceRepository {
 	private final ReactiveMongoTemplate template;
 
-	public CommandRepository(ReactiveMongoTemplate template) {
+	public DeviceRepository(ReactiveMongoTemplate template) {
 		this.template = template;
 	}
 
-	public Mono<Command> save(Command command) {
-		System.out.println(command.toString());
-		System.out.println(command.getAction().toString());
-		System.out.println(command.getDeviceId());
-		return template.save(command);
+	public Mono<Device> save(Device device) {
+		return template.save(device);
 	}
 
-	public Flux<Command> findAll() {
-		return template.findAll(Command.class);
+	public Flux<Device> findAll() {
+		return template.findAll(Device.class);
 	}
 
-	public Mono<Command> findById(String id) {
-		return template.findById(id, Command.class);
+	public Mono<Device> findById(String id) {
+		return template.findById(id, Device.class);
 	}
 
 	public Mono<Void> deleteById(String id) {
-		return template.remove(Query.query(Criteria.where("id").is(id)), Command.class)
+		return template.remove(Query.query(Criteria.where("id").is(id)), Device.class)
 			.flatMap(result -> result.getDeletedCount() > 0
 				? Mono.empty()
-				: Mono.error(new IllegalArgumentException("Command not found. ")));
+				: Mono.error(new IllegalArgumentException("Device not found. ")));
 	}
 }

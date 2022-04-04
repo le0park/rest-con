@@ -27,7 +27,6 @@ public class CommandService {
 		this.executors = executors;
 	}
 
-
 	public Mono<CommandResult> execute(Command command) {
 		return Flux.fromIterable(executors)
 			.filter(executor -> executor.accept(command.getAction()))
@@ -36,7 +35,6 @@ public class CommandService {
 	}
 
 	public Mono<Command> createOrUpdate(ServerRequest request) {
-		CommandType type = CommandType.valueOf(request.pathVariable("type"));
 		return request.bodyToMono(Command.class)
 			.flatMap(commandRepository::save);
 	}
