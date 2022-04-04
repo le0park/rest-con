@@ -61,6 +61,10 @@ public class WebRouter {
 						.andRoute(DELETE("/{id}"), request -> ServerResponseUtils.okJson(
 							deviceService.remove(request),
 							Void.class
+						))
+						.andRoute(POST("/{id}/key-pair"), request -> ServerResponseUtils.okJson(
+							deviceService.createKeyPair(request),
+							Device.class
 						))));
 	}
 }
