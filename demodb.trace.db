@@ -1,0 +1,3 @@
+2022-03-01 11:17:43 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COMMAND" not found; SQL statement:
+select command0_.id as id1_0_, command0_.device_id as device_i3_0_, command0_.type as type2_0_, command0_1_.script as script1_3_, command0_2_.body as body1_5_, command0_2_.method as method2_5_, command0_2_.url as url3_5_, case when command0_1_.id is not null then 1 when command0_2_.id is not null then 2 when command0_.id is not null then 0 end as clazz_ from command command0_ left outer join ssh_command command0_1_ on command0_.id=command0_1_.id left outer join webhook_command command0_2_ on command0_.id=command0_2_.id [42102-200]
